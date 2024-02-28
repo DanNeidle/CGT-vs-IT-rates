@@ -27,10 +27,12 @@ for income_tax_type in ["dividend", "employment"]:
         cgt_rates.append(row[3])
 
 
-    # Sort the list of tuples by the CGT rate in descending order (highest first) 
+    # Sort the list of tuples first by the CGT rate in descending order (highest first)
+    # and then by relevant IT rates in descending order (highest first) where there is a tie in CGT rates
     country_rate_tuples = list(zip(countries, relevant_it_rates, cgt_rates))
-    sorted_country_rate_tuples = sorted(country_rate_tuples, key=lambda x: x[2], reverse=True)
+    sorted_country_rate_tuples = sorted(country_rate_tuples, key=lambda x: (x[2], x[1]), reverse=True)
     countries, relevant_it_rates, cgt_rates = zip(*sorted_country_rate_tuples)
+
 
     # do logo
     LOGO_JPG_FILE = Image.open("logo_full_white_on_blue.jpg")
